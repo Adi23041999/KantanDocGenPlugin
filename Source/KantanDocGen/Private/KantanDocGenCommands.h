@@ -9,6 +9,7 @@
 #include "CoreMinimal.h"
 
 #include "Framework/Commands/Commands.h"
+#include "Styling/AppStyle.h"
 
 class FKantanDocGenCommands : public TCommands<FKantanDocGenCommands>
 {
