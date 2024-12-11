@@ -195,7 +195,7 @@ bool FNodeDocsGenerator::GenerateNodeImage(UEdGraphNode* Node, FNodeProcessingSt
 			}
 
 			IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
-			TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule.CreateImageWrapper(EImageFormat::PNG);
+			TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule.CreateImageWrapper(EImageFormat::JPEG);
 
 			TArray<uint8> CompressedImage;
 
@@ -211,7 +211,7 @@ bool FNodeDocsGenerator::GenerateNodeImage(UEdGraphNode* Node, FNodeProcessingSt
 
 			State.RelImageBasePath = TEXT("../img");
 			FString ImageBasePath = State.ClassDocsPath / TEXT("img"); // State.RelImageBasePath;
-			FString ImgFilename = FString::Printf(TEXT("nd_img_%s.png"), *NodeName);
+			FString ImgFilename = FString::Printf(TEXT("nd_img_%s.jpg"), *NodeName);
 			FString ScreenshotSaveName = ImageBasePath / ImgFilename;
 
 			if (!FFileHelper::SaveArrayToFile(CompressedImage, *ScreenshotSaveName))
@@ -466,10 +466,11 @@ bool FNodeDocsGenerator::UpdateIndexDocWithStruct(FXmlFile* DocFile, UScriptStru
 	auto Classes = DocFile->GetRootNode()->FindChildNode(TEXT("structs"));
 	auto ClassElem = AppendChild(Classes, TEXT("struct"));
 
-	AppendChildCDATA(ClassElem, TEXT("display_name"), Struct->GetDisplayNameText().ToString());
+	AppendChildCDATA(ClassElem, TEXT("display_name"), Struct->GetStructCPPName());
 	AppendChildCDATA(ClassElem, TEXT("description"), Struct->GetToolTipText(false).ToString());
 
 	FXmlNode* Props = AppendChild(ClassElem, TEXT("properties"));
+	
 	for (TFieldIterator<FProperty> It(Struct, EFieldIteratorFlags::ExcludeSuper); It; ++It)
 	{
 		if ((It->PropertyFlags & (CPF_BlueprintVisible | CPF_Edit)) != 0)

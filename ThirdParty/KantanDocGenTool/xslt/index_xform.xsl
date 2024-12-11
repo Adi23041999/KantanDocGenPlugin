@@ -85,7 +85,7 @@
 	</xsl:template>
 	<xsl:template match="struct">
 		<tr>
-			<td width="25%">
+			<td width="15%">
 				<div class="param_name title_style">
 					<xsl:value-of select="display_name"/>
 				</div>
@@ -95,7 +95,7 @@
 					<xsl:value-of select="description"/>
 				</div>
 			</td>
-			<td width="50%">
+			<td width="60%">
 				<xsl:apply-templates select="properties"/>
 			</td>
 		</tr>
@@ -106,17 +106,18 @@
 		<table>
 			<tbody>
 				<xsl:apply-templates select="property">
-					<xsl:sort select="display_name"/>
+          <!-- Disable sort so the properties appear in the same order they are defined -->
+					<!--<xsl:sort select="display_name"/>-->
 				</xsl:apply-templates>
 			</tbody>
 		</table>
 	</xsl:template>
 	<xsl:template match="property">
 		<tr>
-			<td width="20%">
+			<td width="20%" class="prop_type_style">
 				<xsl:value-of select="type"/>
 			</td>
-			<td width="20%">
+			<td width="20%" class="prop_display_name_style">
 				<xsl:value-of select="display_name"/>
 			</td>
 			<td width="60%">
@@ -139,12 +140,12 @@
 	</xsl:template>
 		<xsl:template match="enum">
 		<tr>
-			<td width="25%">
+			<td width="15%">
 				<div class="param_name title_style">
 					<xsl:value-of select="display_name"/>
 				</div>
 			</td>
-			<td width="50%">
+			<td width="60%">
 				<div>
 					<xsl:value-of select="description"/>
 				</div>

@@ -40,7 +40,8 @@
 				<xsl:value-of select="classTree"/>
 			</i>
 		</p>
-		<p>
+    <h2 class="title_style">Description</h2>
+		<p class="description_style">
 			<xsl:value-of select="description"/>
 		</p>
 		<xsl:apply-templates select="properties"/>
@@ -52,17 +53,18 @@
 		<table>
 			<tbody>
 				<xsl:apply-templates select="property">
-					<xsl:sort select="display_name"/>
+          <!-- Disable sort so the properties appear in the same order they are defined -->
+          <!--<xsl:sort select="display_name"/>-->
 				</xsl:apply-templates>
 			</tbody>
 		</table>
 	</xsl:template>
 	<xsl:template match="property">
 		<tr>
-			<td width="20%">
+			<td width="20%" class="prop_type_style">
 				<xsl:value-of select="type"/>
 			</td>
-			<td width="20%">
+			<td width="20%" class="prop_display_name_style">
 				<xsl:value-of select="display_name"/>
 			</td>
 			<td width="60%">

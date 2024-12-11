@@ -59,7 +59,7 @@
 		</p>
 	</xsl:template>
 	<xsl:template match="imgpath">
-		<img>
+		<img class ="node_image_style">
 			<xsl:attribute name="src">
 				<xsl:apply-templates/>
 			</xsl:attribute>
