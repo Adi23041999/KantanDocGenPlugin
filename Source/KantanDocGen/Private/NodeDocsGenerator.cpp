@@ -33,6 +33,7 @@
 #include "IImageWrapper.h"
 #include "IImageWrapperModule.h"
 #include "Misc/FileHelper.h"
+#include "Misc/EngineVersionComparison.h"
 #include "AnimGraphNode_Base.h"
 
 FNodeDocsGenerator::~FNodeDocsGenerator()
@@ -394,6 +395,13 @@ TSharedPtr<FXmlFile> FNodeDocsGenerator::InitClassDocXml(UClass* Class)
 			FString DisplayName = It->GetDisplayNameText().ToString();
 			AppendChildCDATA(Prop, TEXT("display_name"), DisplayName.Replace(TEXT(" "), TEXT("")));
 			FString ToolTip = It->GetToolTipText().ToString();
+#if UE_VERSION_OLDER_THAN(5, 2, 0)
+			FString Fixup = DisplayName + ":" + LINE_TERMINATOR_ANSI;
+			if (ToolTip.StartsWith(Fixup))
+			{
+				ToolTip = ToolTip.Replace(*Fixup, TEXT(""));
+			}
+#endif
 			if (ToolTip != DisplayName)
 				AppendChildCDATA(Prop, TEXT("description"), ToolTip);
 		}
@@ -480,6 +488,13 @@ bool FNodeDocsGenerator::UpdateIndexDocWithStruct(FXmlFile* DocFile, UScriptStru
 			FString DisplayName = It->GetDisplayNameText().ToString();
 			AppendChildCDATA(Prop, TEXT("display_name"), DisplayName.Replace(TEXT(" "), TEXT("")));
 			FString ToolTip = It->GetToolTipText().ToString();
+#if UE_VERSION_OLDER_THAN(5, 2, 0)
+			FString Fixup = DisplayName + ":" + LINE_TERMINATOR_ANSI;
+			if (ToolTip.StartsWith(Fixup))
+			{
+				ToolTip = ToolTip.Replace(*Fixup, TEXT(""));
+			}
+#endif
 			if (ToolTip != DisplayName)
 				AppendChildCDATA(Prop, TEXT("description"), ToolTip);
 		}
